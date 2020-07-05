@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.olc.ejdemo.mapper.StockImpDataInfoMapper">
+  <resultMap id="BaseResultMap" type="com.olc.ejdemo.modle.StockImpDataInfo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="stock_code" jdbcType="VARCHAR" property="stockCode" />
+    <result column="stock_name" jdbcType="VARCHAR" property="stockName" />
+    <result column="price_new" jdbcType="DECIMAL" property="priceNew" />
+    <result column="main_amount_than" jdbcType="DECIMAL" property="mainAmountThan" />
+    <result column="as_flow_than" jdbcType="DECIMAL" property="asFlowThan" />
+    <result column="pe_ratio" jdbcType="DECIMAL" property="peRatio" />
+    <result column="become_amount" jdbcType="DECIMAL" property="becomeAmount" />
+    <result column="current_market_value" jdbcType="DECIMAL" property="currentMarketValue" />
+    <result column="stock_change" jdbcType="DECIMAL" property="stockChange" />
+    <result column="main_amount" jdbcType="DECIMAL" property="mainAmount" />
+    <result column="super_amount" jdbcType="DECIMAL" property="superAmount" />
+    <result column="big_amount" jdbcType="DECIMAL" property="bigAmount" />
+    <result column="middle_amount" jdbcType="DECIMAL" property="middleAmount" />
+    <result column="litter_amount" jdbcType="DECIMAL" property="litterAmount" />
+    <result column="status_code" jdbcType="BIGINT" property="statusCode" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, stock_code, stock_name, price_new, main_amount_than, as_flow_than, pe_ratio, 
+    become_amount, current_market_value, stock_change, main_amount, super_amount, big_amount, 
+    middle_amount, litter_amount, status_code, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from stock_imp_data_info
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from stock_imp_data_info
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.olc.ejdemo.modle.StockImpDataInfo">
+    insert into stock_imp_data_info (id, stock_code, stock_name,
+      price_new, main_amount_than, as_flow_than,
+      pe_ratio, become_amount, current_market_value,
+      stock_change, main_amount, super_amount,
+      big_amount, middle_amount, litter_amount, status_code,
+      create_time, update_time)
+    values (#{id,jdbcType=VARCHAR}, #{stockCode,jdbcType=VARCHAR}, #{stockName,jdbcType=VARCHAR},
+      #{priceNew,jdbcType=DECIMAL}, #{mainAmountThan,jdbcType=DECIMAL}, #{asFlowThan,jdbcType=DECIMAL},
+      #{peRatio,jdbcType=DECIMAL}, #{becomeAmount,jdbcType=DECIMAL}, #{currentMarketValue,jdbcType=DECIMAL},
+      #{stockChange,jdbcType=DECIMAL}, #{mainAmount,jdbcType=DECIMAL}, #{superAmount,jdbcType=DECIMAL},
+      #{bigAmount,jdbcType=DECIMAL}, #{middleAmount,jdbcType=DECIMAL}, #{litterAmount,jdbcType=DECIMAL},#{statusCode,jdbcType=BIGINT},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.olc.ejdemo.modle.StockImpDataInfo">
+    insert into stock_imp_data_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="stockCode != null">
+        stock_code,
+      </if>
+      <if test="stockName != null">
+        stock_name,
+      </if>
+      <if test="priceNew != null">
+        price_new,
+      </if>
+      <if test="mainAmountThan != null">
+        main_amount_than,
+      </if>
+      <if test="asFlowThan != null">
+        as_flow_than,
+      </if>
+      <if test="peRatio != null">
+        pe_ratio,
+      </if>
+      <if test="becomeAmount != null">
+        become_amount,
+      </if>
+      <if test="currentMarketValue != null">
+        current_market_value,
+      </if>
+      <if test="stockChange != null">
+        stock_change,
+      </if>
+      <if test="mainAmount != null">
+        main_amount,
+      </if>
+      <if test="superAmount != null">
+        super_amount,
+      </if>
+      <if test="bigAmount != null">
+        big_amount,
+      </if>
+      <if test="middleAmount != null">
+        middle_amount,
+      </if>
+      <if test="litterAmount != null">
+        litter_amount,
+      </if>
+      <if test="statusCode != null">
+        status_code,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="stockCode != null">
+        #{stockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stockName != null">
+        #{stockName,jdbcType=VARCHAR},
+      </if>
+      <if test="priceNew != null">
+        #{priceNew,jdbcType=DECIMAL},
+      </if>
+      <if test="mainAmountThan != null">
+        #{mainAmountThan,jdbcType=DECIMAL},
+      </if>
+      <if test="asFlowThan != null">
+        #{asFlowThan,jdbcType=DECIMAL},
+      </if>
+      <if test="peRatio != null">
+        #{peRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="becomeAmount != null">
+        #{becomeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="currentMarketValue != null">
+        #{currentMarketValue,jdbcType=DECIMAL},
+      </if>
+      <if test="stockChange != null">
+        #{stockChange,jdbcType=DECIMAL},
+      </if>
+      <if test="mainAmount != null">
+        #{mainAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="superAmount != null">
+        #{superAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="bigAmount != null">
+        #{bigAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="middleAmount != null">
+        #{middleAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="litterAmount != null">
+        #{litterAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="statusCode != null">
+        #{statusCode,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.olc.ejdemo.modle.StockImpDataInfo">
+    update stock_imp_data_info
+    <set>
+      <if test="stockCode != null">
+        stock_code = #{stockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stockName != null">
+        stock_name = #{stockName,jdbcType=VARCHAR},
+      </if>
+      <if test="priceNew != null">
+        price_new = #{priceNew,jdbcType=DECIMAL},
+      </if>
+      <if test="mainAmountThan != null">
+        main_amount_than = #{mainAmountThan,jdbcType=DECIMAL},
+      </if>
+      <if test="asFlowThan != null">
+        as_flow_than = #{asFlowThan,jdbcType=DECIMAL},
+      </if>
+      <if test="peRatio != null">
+        pe_ratio = #{peRatio,jdbcType=DECIMAL},
+      </if>
+      <if test="becomeAmount != null">
+        become_amount = #{becomeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="currentMarketValue != null">
+        current_market_value = #{currentMarketValue,jdbcType=DECIMAL},
+      </if>
+      <if test="stockChange != null">
+        stock_change = #{stockChange,jdbcType=DECIMAL},
+      </if>
+      <if test="mainAmount != null">
+        main_amount = #{mainAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="superAmount != null">
+        super_amount = #{superAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="bigAmount != null">
+        big_amount = #{bigAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="middleAmount != null">
+        middle_amount = #{middleAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="litterAmount != null">
+        litter_amount = #{litterAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="statusCode != null">
+        status_code = #{statusCode,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.olc.ejdemo.modle.StockImpDataInfo">
+    update stock_imp_data_info
+    set stock_code = #{stockCode,jdbcType=VARCHAR},
+      stock_name = #{stockName,jdbcType=VARCHAR},
+      price_new = #{priceNew,jdbcType=DECIMAL},
+      main_amount_than = #{mainAmountThan,jdbcType=DECIMAL},
+      as_flow_than = #{asFlowThan,jdbcType=DECIMAL},
+      pe_ratio = #{peRatio,jdbcType=DECIMAL},
+      become_amount = #{becomeAmount,jdbcType=DECIMAL},
+      current_market_value = #{currentMarketValue,jdbcType=DECIMAL},
+      stock_change = #{stockChange,jdbcType=DECIMAL},
+      main_amount = #{mainAmount,jdbcType=DECIMAL},
+      super_amount = #{superAmount,jdbcType=DECIMAL},
+      big_amount = #{bigAmount,jdbcType=DECIMAL},
+      middle_amount = #{middleAmount,jdbcType=DECIMAL},
+      litter_amount = #{litterAmount,jdbcType=DECIMAL},
+      status_code = #{statusCode,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
