@@ -44,6 +44,13 @@ public class StockImpDataInfo {
 
     private BigDecimal litterAmount = BigDecimal.ZERO;
 
+    private String one;// 最近5天涨跌行情，-1 跌，1涨
+    private String two;
+    private String three;
+    private String four;
+    private String five;
+    private String now;
+
     private Integer statusCode;
 
     private Date createTime;

@@ -10,8 +10,10 @@ import com.olc.ejdemo.util.AddBeanUtil;
 import com.olc.ejdemo.util.JobUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -93,6 +95,7 @@ public class ImportStockJob implements SimpleJob {
                     .setMainAmount(e.getMainAmount())
                     .setSuperAmount(e.getSuperAmount())
                     .setMiddleAmount(e.getMiddleAmount())
+                    .setNow(e.getStockChange().compareTo(BigDecimal.ZERO)>0 ? "1" : "-1")
                     .setPeRatio(e.getPeRatio())
                     .setPriceNew(e.getPriceNew())
                     .setUpdateTime(new Date());
@@ -108,8 +111,64 @@ public class ImportStockJob implements SimpleJob {
         StockImpDataInfoMapper stockImpDataInfoMapper =
                 AddBeanUtil.getBean(StockImpDataInfoMapper.class);
         for (StockImpDataInfo s : stockImpDataInfos) {
-            StockImpDataInfo stockImpDataInfo = stockImpDataInfoMapper.selectByPrimaryKey(s.getId());
-            if (Objects.isNull(stockImpDataInfo)){
+            StockImpDataInfo sidi = stockImpDataInfoMapper.selectByPrimaryKey(s.getId());
+            String now = LocalDate.now().toString();
+            int status = 0;
+            if (Objects.isNull(sidi)){
+                s.setOne(s.getNow());
+                s.setNow(now);
+            }else {
+                if (now.equals(sidi.getNow())){
+                    continue;
+                }
+                String two = sidi.getTwo();
+                if (StringUtils.isEmpty(two)){
+                    s.setTwo(sidi.getOne());
+                    s.setOne(s.getNow());
+                    if ("-1".equals(s.getNow())){
+                        status ++;
+                    }
+                }else {
+                    String three = sidi.getThree();
+                    if (StringUtils.isEmpty(three)){
+                        s.setThree(sidi.getTwo());
+                        s.setTwo(sidi.getOne());
+                        s.setOne(s.getNow());
+                        if ("-1".equals(s.getNow())){
+                            status ++;
+                        }
+                    }else {
+                        String four = sidi.getFour();
+                        if (StringUtils.isEmpty(four)){
+                            s.setFour(sidi.getThree());
+                            s.setThree(sidi.getTwo());
+                            s.setTwo(sidi.getOne());
+                            s.setOne(s.getNow());
+                            if ("-1".equals(s.getNow())){
+                                status ++;
+                            }
+                        }else {
+                            String five = sidi.getFive();
+                            if (StringUtils.isEmpty(five)){
+                                s.setFive(sidi.getFour());
+                                s.setFour(sidi.getThree());
+                                s.setThree(sidi.getTwo());
+                                s.setTwo(sidi.getOne());
+                                s.setOne(s.getNow());
+                                if ("-1".equals(s.getNow())){
+                                    status ++;
+                                }
+                            }
+                        }
+                    }
+                }
+                s.setNow(now);
+                s.setStatusCode(status);
+            }
+            if (sidi == null){
+                if ("-1".equals(s.getNow())){
+                    s.setStatusCode(1);
+                }
                 stockImpDataInfoMapper.insert(s);
             }else {
                 stockImpDataInfoMapper.updateByPrimaryKeySelective(s);
