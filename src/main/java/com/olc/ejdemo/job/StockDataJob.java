@@ -7,10 +7,7 @@ import com.dangdang.ddframe.job.api.ShardingContext;
 import com.dangdang.ddframe.job.api.simple.SimpleJob;
 import com.olc.ejdemo.mapper.StockDataInfoMapper;
 import com.olc.ejdemo.modle.StockDataInfo;
-import com.olc.ejdemo.util.AddBeanUtil;
-import com.olc.ejdemo.util.HttpClientUtils;
-import com.olc.ejdemo.util.HttpUtils;
-import com.olc.ejdemo.util.JobUtil;
+import com.olc.ejdemo.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.methods.HttpGet;
 import org.springframework.stereotype.Component;
@@ -115,12 +112,12 @@ public class StockDataJob implements SimpleJob {
         }
     }
 
-    private void allPageTask(String formatDay, HttpClientUtils httpClientUtils, String key, String timeKey, String jsName, String stValue, String cmdValue, String page, int beginPage,int endPage) {
-        for (int i = beginPage; i < endPage; ++i) {
+    private void allPageTask(String formatDay, HttpClientUtils httpClientUtils, String key, String timeKey, String jsName, String stValue, String cmdValue, String page, int beginPage, int endPage) {
+        for (int i = beginPage; i <= endPage; ++i) {
             HttpGet httpGet2 = createDFCFHttpGet(jsName, stValue, cmdValue, i, key, timeKey);
             try {
                 // 休眠个3秒
-                Thread.sleep(3 * 1000l);
+                Thread.sleep(3 * 1000);
                 String result2 = httpClientUtils.executeWithResult(httpGet2, "utf-8");
                 log.info("东方财富的数据,股市[{}]，排行榜[{}],[{}]页, 返回的结果为[{}]", key, timeKey, i, result2);
                 String[] dateS2 = result2.split("data:");
@@ -241,23 +238,24 @@ public class StockDataJob implements SimpleJob {
             QueryWrapper<StockDataInfo> queryWrapper = new QueryWrapper<>();
             queryWrapper.lambda().eq(StockDataInfo::getStockCode,stockCode);
             StockDataInfoMapper stockDataInfoMapper = AddBeanUtil.getBean(StockDataInfoMapper.class);
-            StockDataInfo newStockData = stockDataInfoMapper.selectByPrimaryKey(stockCode);
-            if (Objects.isNull(newStockData)) {
+            StockDataInfo oldStockData = stockDataInfoMapper.selectByPrimaryKey(stockCode);
+            if (Objects.isNull(oldStockData)) {
                 stockDataInfo.setCreateTime(new Date());
                 stockDataInfo.setCrawlerVersion(1L);
                 int result = stockDataInfoMapper.insert(stockDataInfo);
                 log.info("第一次东方财富的数据[{}]，数据为[{}]",result,  JSON.toJSONString(stockDataInfo));
             } else {
-                stockDataInfo.setId(newStockData.getId());
-                stockDataInfo.setCrawlerVersion(newStockData.getCrawlerVersion()+1);
-                int result = stockDataInfoMapper.updateByPrimaryKeySelective(stockDataInfo);
-                log.info("更新东方财富的数据[{}]，数据为[{}]", result, JSON.toJSONString(stockDataInfo));
+                CopyPropertyNullUtil.copyProperties(stockDataInfo,oldStockData);
+                oldStockData.setId(oldStockData.getId());
+                oldStockData.setCrawlerVersion(oldStockData.getCrawlerVersion()+1);
+                int result = stockDataInfoMapper.updateByPrimaryKeySelective(oldStockData);
+                log.info("更新东方财富的数据[{}]，数据为[{}]", result, JSON.toJSONString(oldStockData));
             }
         } catch (Exception e) {
             log.error("插入或更新东方财富的数据，出现异常{}", e);
         }
     }
-
+//[{"becomeAmount":0,"bigAmount":-292.3600,"bigRatio":-21.86,"countTime":1596694532000,"crawlerVersion":118,"createTime":1596523289000,"currentMarketValue":0,"id":3640,"litterAmount":156.2700,"litterRatio":11.69,"mainAmount":-292.3600,"mainRatio":-21.86,"middleAmount":136.0900,"middleRatio":10.18,"peRatio":0,"priceNew":3.00,"someinfo":"-0.0300","stockChange":-0.99,"stockCode":"600530","stockName":"*ST交昂","stockPage":36,"superAmount":0.0000,"superRatio":0.00,"timeVersion":"沪深A股#今日排行#2020-08-06 14:15:32","updateTime":1596694539404}]
     private void cleanInfoStringArr(String[] infoStrings) {
         for (int i = 0; i < infoStrings.length; ++i) {
             infoStrings[i] = infoStrings[i].equals("-") ? "0" : infoStrings[i];

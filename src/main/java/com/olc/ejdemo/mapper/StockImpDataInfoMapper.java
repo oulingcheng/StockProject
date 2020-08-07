@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.olc.ejdemo.modle.StockImpDataInfo;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface StockImpDataInfoMapper extends BaseMapper<StockImpDataInfo> {
     int deleteByPrimaryKey(Long id);
@@ -18,4 +20,7 @@ public interface StockImpDataInfoMapper extends BaseMapper<StockImpDataInfo> {
 
     int updateByPrimaryKey(StockImpDataInfo record);
 
+    StockImpDataInfo selectTheDay(String stockCode);
+
+    List<StockImpDataInfo> selectTheDayStock();
 }

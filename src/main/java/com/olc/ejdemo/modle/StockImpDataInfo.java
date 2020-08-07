@@ -14,7 +14,7 @@ import java.util.Date;
 @TableName("stock_imp_data_info")
 public class StockImpDataInfo {
     private static final long serialVersionUID = 1L;
-    private String id;
+    private int id;
 
     private String stockCode;
 

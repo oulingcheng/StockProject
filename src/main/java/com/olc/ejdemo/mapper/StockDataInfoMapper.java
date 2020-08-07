@@ -25,5 +25,7 @@ public interface StockDataInfoMapper extends BaseMapper<StockDataInfo> {
 
     int updateByCode(StockDataInfo stockDataInfo);
 
-    List<StockDataInfo> selectImpData(@Param("begin") int begin,@Param("end") int end);
+    List<StockDataInfo> selectImpData(@Param("begin") int begin, @Param("end") int end);
+
+    List<StockDataInfo> selectImpDataAll();
 }

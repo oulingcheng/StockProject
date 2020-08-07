@@ -26,43 +26,43 @@
         class="com.olc.elastic_job.job.job" 作业类
         sharding-item-parameters="0=北京,1=上海,2=广州,3=深圳,4=澳门" 分片项参数值，分片项索引号不能大于分片项总数
     -->
-    <reg:zookeeper server-lists="0.0.0.0:2181"
-                   namespace="elasticjob-1"
-                   id="regCenter1"
-                   max-retries="3"
-                   base-sleep-time-milliseconds="1000"
-                   max-sleep-time-milliseconds="3000"/>
-    <job:simple registry-center-ref="regCenter1"
-                cron="0/10 * * * * ?"
-                sharding-total-count="4"
-                id="stockDataJob"
-                class="com.olc.ejdemo.job.StockDataJob"
-                sharding-item-parameters="0=001,1=002,2=003,3=004"/>
+        <reg:zookeeper server-lists="0.0.0.0:2181"
+                       namespace="elasticjob-1"
+                       id="regCenter1"
+                       max-retries="3"
+                       base-sleep-time-milliseconds="1000"
+                       max-sleep-time-milliseconds="3000"/>
+        <job:simple registry-center-ref="regCenter1"
+                    cron="0 10 * * * ? "
+                    sharding-total-count="4"
+                    id="stockDataJob"
+                    class="com.olc.ejdemo.job.StockDataJob"
+                    sharding-item-parameters="0=001,1=002,2=003,3=004"/>
 
-    <reg:zookeeper server-lists="0.0.0.0:2181"
-                   namespace="elasticjob-2"
-                   id="regCenter2"
-                   max-retries="3"
-                   base-sleep-time-milliseconds="1000"
-                   max-sleep-time-milliseconds="3000"/>
-    <job:simple registry-center-ref="regCenter2"
-                cron="0/10 * * * * ?"
-                sharding-total-count="4"
-                id="thsDataJob"
-                class="com.olc.ejdemo.job.ThsStockJob"
-                sharding-item-parameters="0=001,1=002,2=003,3=004"/>
+        <reg:zookeeper server-lists="0.0.0.0:2181"
+                       namespace="elasticjob-2"
+                       id="regCenter2"
+                       max-retries="3"
+                       base-sleep-time-milliseconds="1000"
+                       max-sleep-time-milliseconds="3000"/>
+        <job:simple registry-center-ref="regCenter2"
+                    cron="0 10 * * * ? "
+                    sharding-total-count="4"
+                    id="thsDataJob"
+                    class="com.olc.ejdemo.job.ThsStockJob"
+                    sharding-item-parameters="0=001,1=002,2=003,3=004"/>
 
-    <reg:zookeeper server-lists="0.0.0.0:2181"
+<!--    <reg:zookeeper server-lists="0.0.0.0:2181"
                    namespace="elasticjob-3"
                    id="regCenter4"
                    max-retries="3"
                    base-sleep-time-milliseconds="1000"
                    max-sleep-time-milliseconds="3000"/>
     <job:simple registry-center-ref="regCenter4"
-                cron="0/10 * * * * ?"
-                sharding-total-count="4"
+                cron="0 10 * * * ? "
+                sharding-total-count="1"
                 id="impJob"
                 class="com.olc.ejdemo.job.ImportStockJob"
-                sharding-item-parameters="0=001,1=002,2=003,3=004"/>
+                sharding-item-parameters="0=001"/>-->
 
 </beans>

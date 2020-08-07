@@ -51,14 +51,15 @@ public class ThsStockJob implements SimpleJob {
 
     }
 
-    private void allPageTask(HttpClientUtils httpClientUtils,int beginPage,int endPage) {
-        for (int i = beginPage; i < endPage; i++) {
+    private void allPageTask(HttpClientUtils httpClientUtils, int beginPage, int endPage) {
+        for (int i = beginPage; i <= endPage; i++) {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            String path = "http://q.10jqka.com.cn/index/index/board/all/field/zdf/order/desc/page/"+(i+1)+"/ajax/1";
+            //http://q.10jqka.com.cn/index/index/board/all/field/zdf/order/desc/page/1/ajax/1
+            String path = "http://q.10jqka.com.cn/index/index/board/all/field/zdf/order/desc/page/"+i+"/ajax/1";
             HttpGet HTMLHttpGet = HttpUtils.get(path);
             try {
                 String html = httpClientUtils.executeWithResult(HTMLHttpGet);

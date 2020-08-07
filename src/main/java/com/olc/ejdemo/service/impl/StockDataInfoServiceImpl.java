@@ -11,6 +11,6 @@ import org.springframework.stereotype.Service;
  * @Date 2020/7/4
  */
 @Service
-public class StockDataInfoServiceImpl extends ServiceImpl<StockDataInfoMapper,StockDataInfo> implements IStockDataInfoService {
+public class StockDataInfoServiceImpl extends ServiceImpl<StockDataInfoMapper, StockDataInfo> implements IStockDataInfoService {
 
 }

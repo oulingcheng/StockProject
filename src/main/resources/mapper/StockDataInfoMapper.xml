@@ -236,15 +236,6 @@
             <if test="stockChange != null">
                 stock_change = #{stockChange,jdbcType=DECIMAL},
             </if>
-            <if test="peRatio != null">
-                pe_ratio = #{peRatio,jdbcType=DECIMAL},
-            </if>
-            <if test="becomeAmount != null">
-                become_amount = #{becomeAmount,jdbcType=DECIMAL},
-            </if>
-            <if test="currentMarketValue != null">
-                current_market_value = #{currentMarketValue,jdbcType=DECIMAL},
-            </if>
             <if test="mainAmount != null">
                 main_amount = #{mainAmount,jdbcType=DECIMAL},
             </if>
@@ -375,5 +366,11 @@
         <include refid="Base_Column_List"/>
         from stock_data_info
         limit #{begin},#{end}
+    </select>
+
+    <select id="selectImpDataAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from stock_data_info
     </select>
 </mapper>

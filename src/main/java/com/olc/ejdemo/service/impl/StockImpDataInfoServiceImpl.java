@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.olc.ejdemo.mapper.StockImpDataInfoMapper;
 import com.olc.ejdemo.modle.StockImpDataInfo;
 import com.olc.ejdemo.service.IStockImpDataInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author Oulingcheng
@@ -12,5 +15,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class StockImpDataInfoServiceImpl extends ServiceImpl<StockImpDataInfoMapper, StockImpDataInfo> implements IStockImpDataInfoService {
+
+    @Autowired
+    private StockImpDataInfoMapper stockImpDataInfoMapper;
+
+    @Override
+    public List<StockImpDataInfo> selectTheDayStock() {
+        return stockImpDataInfoMapper.selectTheDayStock();
+    }
 
 }
